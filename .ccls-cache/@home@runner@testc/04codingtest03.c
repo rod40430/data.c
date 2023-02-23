@@ -1,18 +1,14 @@
-/*  02 이름을 요청하고, 그 이름을 다음과 같은 포맷으로 출력하는 프로그램을 작성하라.  */
+// 03 하나의 부동소수점 수를 읽고, 그것을 먼저 소수점 표기로 출력하고, 이어서
+// 지수 표기로 출력하는 프로그램을 작성하라.
 #include <stdio.h>
-#include <string.h>
 
 int main(void)
 {
-  char name[20];
+  float num;
 
-  printf("이름을 입력해주세요 : ");
-  scanf(" %s", name);
-
-  printf("\n\"%s\"", name);
-  printf("\n\"%20s\"", name);
-  printf("\n\"%-20s\"", name);
-  printf("\n\"%*s\"", strlen(name) + 3, name);
+  printf("부동소수점을 입력해주세요 : ");
+  scanf(" %f", &num);
+  printf("\n입력된 것은 %.3f 또는 %.3e입니다.\n", num, num);
 
   return 0;
 }
