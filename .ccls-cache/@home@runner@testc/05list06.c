@@ -1,28 +1,13 @@
-// wheat.c -- 지수적 증가
+// divide.c -- 정수형 나눗셈과 부동소수점형 나눗셈
 #include <stdio.h>
-#define SQUARES 64
 
 int main(void)
 {
-  const double CROP = 2e16;  // 밀 수확에서의 세계 밀 생산량
-  double current, total;
-  int count = 1;
-
-  printf("네모칸      추가         누계     ");
-  printf("세계 수확량과의\n");
-  printf("번  호     낱알 수      낱알 수     ");
-  printf("상대 비율\n");
-  total = current = 1.0;  // 낱알 하나로부터 시작한다.
-  printf("%4d %13.2e %12.2e %12.2e\n", count, current, total, total / CROP);
-
-  while (count <= SQUARES)
-    {
-      current *= 2.0;  // 다음 네모칸은 2배의 낱알로 채운다;
-      total += current;  // 누계를 갱신한다.
-      printf("%4d %13.2e %12.2e %12.2e\n", count, current, total, total / CROP);
-      count += 1;
-    }
-  printf("이제 끝이다.\n");
+  printf("정수형 나눗셈 :       5/4      %d\n", 5/4);
+  printf("정수형 나눗셈 :       6/3      %d\n", 6/3);
+  printf("정수형 나눗셈 :       7/4      %d\n", 7/4);
+  printf("부동소수점형 나눗셈 : 7./4.    %1.2f\n", 7./4.);
+  printf("혼합된 나눗셈 :       7/4      %1.2f\n", 7./4);
 
   return 0;
 }
