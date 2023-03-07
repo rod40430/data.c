@@ -24,7 +24,7 @@ void Cubic(float num)
 
   add = num;
   
-  while (i++ <= 2)
+  while (i++ <= 2)  // 2 = 3제곱이며 3은 4제곱이다.
     {
       add *= num;
     }
