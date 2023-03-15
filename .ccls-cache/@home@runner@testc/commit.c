@@ -2,7 +2,7 @@
 
 int main(void)
 {
-  printf("hello commit");
+  printf("Hello commit");
 
   return 0;
 }
