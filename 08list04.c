@@ -12,6 +12,10 @@ int main(void)
   while (getchar() != 'y')
     {
       printf("그러면 %d입니까?\n", ++guess);
+      while (getchar() != '\n')
+        {
+          continue;
+        }
     }
   printf("그것 봐요, 내가 맞출 수 있다고 했잖아요!\n");
   
