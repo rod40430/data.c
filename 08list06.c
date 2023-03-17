@@ -1,4 +1,4 @@
-/* showchar1.c -- 입출력에 큰 문제가 있는 프로그램*/
+/* showchar2.c -- 지정한 행 수와 열 수만큼 문자들을 출력한다.*/
 #include <stdio.h>
 
 void display (char cr, int lines, int width);
@@ -11,11 +11,21 @@ int main(void)
   printf("문자 하나와 두 개의 정수를 입력하시오.\n");
   while ((ch = getchar()) != '\n')
     {
-      scanf("%d %d", &rows, &cols);
-      display(ch, rows, cols);
+      if (scanf("%d %d", &rows, &cols) != 2)
+      {
+        break;
+      }
+
+      display (ch, rows, cols);
+
+      while (getchar() != '\n') 
+        {
+          continue;
+        }
       printf("또 다른 문자와 두 개의 정수를 입력하시오.\n");
-      printf("끝내려면 그냥 Enter키를 누르시오.\n");
+      printf("끝내려면 그냥 Enter 키를 누르시오.\n");
     }
+  
   printf("안녕!\n");
 
   return 0;
