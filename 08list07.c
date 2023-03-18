@@ -23,10 +23,11 @@ int main(void)
     "시작값과 마감값을 입력하시오.\n"
     "(끝내려면 두 값을 모두 0으로 입력) : \n범위의 시작값 : ");
   start = get_long();
+  
   printf("범위의 마감값 : ");
   stop = get_long();
 
-  while (start !=0 || stop != 0)
+  while (start != 0 || stop != 0)
     {
       if (bad_limits(start, stop, MIN, MAX))
       {
@@ -74,7 +75,7 @@ double sum_squares(long a, long b)
   double total = 0;
   long i;
 
-  for (i = 1; 1 <= b; i++)
+  for (i = a; i <= b; i++)
     {
       total += (double) i * (double) i;
     }
