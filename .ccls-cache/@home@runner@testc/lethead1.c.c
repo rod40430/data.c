@@ -5,7 +5,7 @@
 #define PLACE "Megapolis, CA 94904"
 #define WIDTH 40
 
-void starbar(void);  // 함수 프로토타입
+char starbar(void);  // 함수 프로토타입
 
 int main(void)
 {
@@ -18,7 +18,7 @@ int main(void)
   return 0;
 }
 
-void starbar(void)
+char starbar(void)
 {
   int count;
 
