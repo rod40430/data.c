@@ -12,7 +12,7 @@ int main(void)
 
   puts(orig);
   puts(copy);
-  ps = strcpy(copy + 7, orig);
+  ps = strncpy(copy + 7, orig, strlen(orig));
   puts(copy);
   puts(ps);
 
