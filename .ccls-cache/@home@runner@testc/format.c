@@ -1,24 +1,13 @@
 // format.c -- 문자열을 포맷 저장한다.
 #include <stdio.h>
 #include <string.h>
-#define MAX 20
+#define MAX 7
 char * s_gets(char * st, int n);
 
 int main(void)
 {
-  char first[MAX];
-  char last[MAX];
-  char formal[2 * MAX + 10];
-  double prize;
-
-  puts("이름을 입력하시오 : ");
-  s_gets(first, MAX);
-  puts("성을 입력하시오 : ");
-  s_gets(last, MAX);
-  puts("상금을 입력하시오 :");
-  scanf("%lf", &prize);
-  sprintf(formal,"%s, %-19s: $%6.2f\n", last, first, prize);
-  puts(formal);
+  char first[MAX] = {"hello\0"};
+  printf("%lu  %lu", strlen(first), sizeof(first));
   
   return 0;
 }
