@@ -1,11 +1,11 @@
 // strcnvt.c -- strtol()을 사용한다.
 #include <stdio.h>
-#include <stdlib.h>
 #define LIM 30
 char * s_gets(char * st, int n);
 
 int main(void)
 {
+  #include <stdlib.h>
   char number[30];
   s_gets(number, LIM);
   printf("%lf", atof(number));
