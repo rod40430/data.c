@@ -73,3 +73,21 @@ void append(FILE* source, FILE* dest)
   while ((bytes = fread(temp, sizeof(char), BUFSIZE, source)) > 0)
     fwrite(temp, sizeof(char), bytes, dest);
 }
+
+char* s_gets(char* st, int n)
+{
+  char* ret_val;
+  char* find;
+
+  ret_val = fgets(st, n, stdin);
+  if (ret_val)
+  {
+    find = strchr(st, '\n');  // 개행을 찾는다.
+    if (find)  // 주소가 NULL이 아니면,
+      *find = '\0';  // NULL문자를 거기에 놓는다.
+    else
+      while (getchar() != '\n')
+        continue;
+  }
+  return ret_val;
+}
