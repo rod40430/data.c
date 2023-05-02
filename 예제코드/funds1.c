@@ -22,5 +22,12 @@ int main(void)
     9237.11
   };
 
+  printf("stan 씨의 총 잔고는 $%.2f입니다.\n", sum(stan.bankfund, stan.savefund));
+
   return 0;
+}
+
+double sum(double x, double y)
+{
+  return (x + y);
 }
