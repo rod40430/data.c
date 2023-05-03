@@ -16,7 +16,7 @@ struct namect
 void getinfo(struct namect *);
 void makeinfo(struct namect *);
 void showinfo(const struct namect *);
-void clenup(struct namect *);  // 사용이 끝난 메모리를 해제한다.
+void cleanup(struct namect *);  // 사용이 끝난 메모리를 해제한다.
 char* s_gets(char* st, int n);
 
 int main(void)
@@ -26,7 +26,7 @@ int main(void)
   getinfo(&person);
   makeinfo(&person);
   showinfo(&person);
-  clenup(&person);
+  cleanup(&person);
   
   return 0;
 }
