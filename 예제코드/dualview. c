@@ -1,0 +1,161 @@
+// dualview.c -- 비트 필드와 비트 단위 연산자를 사용한다.
+#include <stdio.h>
+#include <stdbool.h>  //C99, 선언 bool, true, false
+#include <limits.h>
+
+// 선 스타일들
+#define SOLID  0
+#define DOTTED 1
+#define DASHED 2
+// 원색들
+#define BLUE   4
+#define GREEN  2
+#define RED    1
+// 혼합된 색상
+#define BLACK  0
+#define YELLOW  (RED | GREEN)
+#define MAGENTA (RED | BLUE)
+#define CYAN    (GREEN | BLUE)
+#define WHITE   (RED | GREEN | BLUE)
+// 비트 단위 상수
+#define OPAQUE 0x1
+#define FILE_BLUE 0x8
+#define FILE_GREEN 0x4
+#define FILE_RED 0x2
+#define FILE_MASK 0xE
+#define BORDER 0x100
+#define BORDER_BLUE 0x800
+#define BORDER_GREEN 0x400
+#define BORDER_RED 0x200
+#define BORDER_MASK 0xE00
+#define B_SOLID 0
+#define B_DOTTED 0x1000
+#define B_DASHED 0x2000
+#define STYLE_MASK 0x3000
+
+const char* colors[8] = 
+{
+  "black",
+  "red",
+  "green",
+  "yellow",
+  "blue",
+  "magenta",
+  "cyan",
+  "white"
+};
+
+struct box_props
+{
+  bool opaque                : 1;  // 또는 unsigned int (C99 이전)
+  unsigned int fill_color    : 3;
+  unsigned int               : 4;
+  unsigned int show_border   : 1; // 또는 unsigned int (C99 이전)
+  unsigned int border_color  : 3;
+  unsigned int border_style  : 2;
+  unsigned int               : 2;
+};
+
+union Views  // 데이터를 구조체로 또는 unsigned int로 인식한다
+{
+  struct box_props st_view;
+  unsigned int ui_view;
+};
+
+void show_settings(const struct box_props* pb);
+void show_settings1(unsigned short);
+char* itobs(int n, char* ps);
+
+int main(void)
+{
+  // box_props 구조체를 만들고 초기화한다.
+  union Views box = 
+  {
+    {
+      true,
+      YELLOW,
+      true,
+      GREEN,
+      DASHED
+    }
+  };
+
+  char bin_str[8 * sizeof(unsigned int) + 1];
+
+  printf("최초의 박스 설정 : \n");
+  show_settings(&box.st_view);
+  
+  printf("\n unsigned int 인식을 사용하는 사격형 설정 : \n");
+  show_settings1(box.ui_view);
+  printf("비트 표기 : %s\n", itobs(box.ui_view, bin_str));
+
+  box.ui_view &= FILE_MASK;  // 채우기 비트들을 일소한다.
+  box.ui_view |= (FILE_BLUE | FILE_GREEN);  // 채우기 색상 설정
+  box.ui_view ^= OPAQUE;  // 투명, 불투명을 토글한다.
+  box.ui_view |= BORDER_RED;  // 잘못된 접근
+  box.ui_view &= ~STYLE_MASK; // 스타일 비트들을 일소한다.
+  box.ui_view |= B_DOTTED;  // 스타일을 점선으로 설정한다.
+
+  printf("\n 변경된 박스 설정 : \n");
+  show_settings(&box.st_view);
+  printf("\n unsigned int 인식을 사용하는 사각형 설정 : \n");
+  show_settings1(box.ui_view);
+  printf("비트 표기 : %s\n", itobs(box.ui_view, bin_str));
+
+  return 0;
+}
+
+void show_settings(const struct box_props* pb)
+{
+  printf("사격형은 %s이다.\n",
+    pb->opaque == true ? "불투명" : "투명");
+  printf("체우기 색상은 %s이다. \n", colors[pb->fill_color]);
+  printf("테두리는 %s 상태에 있다.\n",
+    pb->show_border == true ? "보이는" : "가려진");
+  printf("테두리 색상은 %s이다.\n", colors[pb->border_color]);
+  printf("테두리 스타일은 ");
+  switch (pb->border_style)
+    {
+      case SOLID : printf("실선이다.\n");
+        break;
+      case DOTTED : printf("점선이다.\n");
+        break;
+      case DASHED : printf("파선이다.\n");
+        break;
+      
+      default : printf("알 수 없는 유형이다.");
+    }
+}
+
+void show_settings1(unsigned short us)
+{
+  printf("박스는 %s이다. \n", us & OPAQUE == OPAQUE ? "불투명" : "투명");
+  printf("채우기 색상은 %s이다.\n", colors[(us >> 1) & 07]);
+  printf("테두리는 %s상태에 있다.\n", us & BORDER == BORDER ? "보이는" : "가려진");
+
+  printf("테두리 스타일은 ");
+  switch (us & STYLE_MASK)
+    {
+      case B_SOLID : printf("실선이다.\n");
+        break;
+      case B_DOTTED : printf("점선이다.\n");
+        break;
+      case B_DASHED : printf("파선이다.\n");
+        break;
+      default : printf("알 수 없는 유형이다.");
+    }
+  printf("테두리 색상은 %s.\n", colors[(us >> 9) & 07]);
+  
+}
+
+char* itobs(int n, char* ps)
+{
+  int i;
+  const static int size = CHAR_BIT * sizeof(int);
+
+  for (i = size - 1; i >= 0; i--, n >>= 1)
+    ps[i] = (01 & n) + '0';
+  ps[size] = '\0';
+
+  return ps;
+}
