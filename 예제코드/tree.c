@@ -235,3 +235,5 @@ static Pair SeekItem(const Item *pi, const Tree *ptree)
 
   return look;  // 성공하면 리턴한다.
 }
+
+static void DeleteNode(Node **ptr)
