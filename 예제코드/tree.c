@@ -237,3 +237,6 @@ static Pair SeekItem(const Item *pi, const Tree *ptree)
 }
 
 static void DeleteNode(Node **ptr)
+{
+
+}
