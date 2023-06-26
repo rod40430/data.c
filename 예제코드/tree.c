@@ -236,7 +236,32 @@ static Pair SeekItem(const Item *pi, const Tree *ptree)
   return look;  // 성공하면 리턴한다.
 }
 
-static void DeleteNode(Node **ptr)
+static void DeleteNode(Trnode **ptr)
+// ptr은 부모 노드에 멤버로 저장되어 있는 목표 노드를 가리키는 주소다.
 {
+  Trnode *temp;
 
+  puts((*ptr)->item.petname);
+  if ((*ptr)->left == NULL)
+  {
+    temp = *ptr;
+    *ptr = (*ptr)->right;
+    free(temp);
+  }
+  else if ((*ptr)->right == NULL)
+  {
+    temp = *ptr;
+    *ptr = (*ptr)->left;
+    free(temp);
+  }
+  else  // 삭제되는 노드가 자식이 둘이면
+  {
+    //  오른쪽 하위 트리를 다시 연결할 자리를 찾는다.
+    for (temp = (*ptr)->left; temp->right != NULL; temp = temp->right)
+      continue;
+    temp->right = (*ptr)->right;
+    temp = *ptr;
+    *ptr = (*ptr)->left;
+    free(temp);
+  }
 }
