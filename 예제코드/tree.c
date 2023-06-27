@@ -92,7 +92,7 @@ bool DeleteItem(const Item *pi, Tree *ptree)
 
   look = SeekItem(pi, ptree);
 
-  if (look.parent == NULL)
+  if (look.child == NULL)
     return false;
 
   if (look.parent == NULL)  // root 항목을 삭제한다.
@@ -184,9 +184,9 @@ static bool ToRight(const Item *i1, const Item *i2)
 {
   int comp1;
 
-  if ((comp1 = strcmp(i1->petname, i2->petname) < 0))
+  if ((comp1 = strcmp(i1->petname, i2->petname) > 0))
     return true;
-  else if (comp1 == 0 && strcmp(i1->petkind, i2->petkind) < 0)
+  else if (comp1 == 0 && strcmp(i1->petkind, i2->petkind) > 0)
     return true;
   else
     return false;
@@ -222,7 +222,7 @@ static Pair SeekItem(const Item *pi, const Tree *ptree)
       if (ToLeft(pi, &(look.child->item)))
       {
         look.parent = look.child;
-        look.child = look.child->right;
+        look.child = look.child->left;
       }
       else if (ToRight(pi, &(look.child->item)))
       {
