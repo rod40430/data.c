@@ -167,7 +167,7 @@ static void AddNode(Trnode *new_node, Trnode *root)
     exit(1);
   }
 }
-
+// left and right는 재귀함수
 static bool ToLeft(const Item *i1, const Item *i2)
 {
   int comp1;
